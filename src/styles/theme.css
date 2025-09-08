@@ -1,0 +1,208 @@
+/* ========= Colors ========= */
+:root {
+  --primary-color: #007BFF; /* Bootstrap Blue */
+  --background-color: #F9FAFB; /* Very Light Gray */
+  --card-background: #FFFFFF; /* White */
+  --text-primary: #212529; /* Dark Gray / Black */
+  --text-secondary: #6C757D; /* Medium Gray */
+  --border-color: #DEE2E6; /* Light Gray border */
+  --hover-color: #0056b3; /* Darker blue for hover */
+  --shadow-color: rgba(0, 0, 0, 0.1); /* subtle shadow */
+  --font-family-base: "Roboto", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ========= Body and Base Styles ========= */
+body {
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  font-family: var(--font-family-base);
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ========= Headers ========= */
+h1, h2, h3, h4, h5 {
+  color: var(--primary-color);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  margin-bottom: 1rem;
+}
+
+/* ========= Links ========= */
+a, .nav-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover,
+.nav-link:hover,
+.nav-link.active {
+  color: white;
+  text-decoration: none;
+  background-color: var(--hover-color);
+  border-radius: 6px;
+  padding: 6px 12px;
+  transition: background 0.3s ease;
+}
+
+/* ========= Buttons ========= */
+.btn-outline-primary {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 6px;
+}
+
+.btn-outline-primary:hover, 
+.btn-outline-primary:focus {
+  background-color: var(--primary-color);
+  color: var(--background-color);
+  box-shadow: 0 0 15px var(--primary-color);
+}
+
+/* ========= Navbar ========= */
+.navbar {
+  background-color: var(--background-color) !important;
+  box-shadow: 0 2px 6px var(--shadow-color);
+}
+
+/* ========= Cards ========= */
+.card {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  color: var(--text-primary);
+}
+
+.card:hover {
+  box-shadow: 0 8px 20px var(--shadow-color);
+  transform: translateY(-5px);
+}
+
+/* ========= Footer ========= */
+footer {
+  background-color: var(--background-color);
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border-color);
+  padding: 30px 20px;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* ========= Text Muted ========= */
+.text-muted {
+  color: var(--text-secondary) !important;
+}
+
+/* ========= Shadows ========= */
+.shadow-sm {
+  box-shadow: 0 2px 6px var(--shadow-color) !important;
+}
+
+/* ========= Responsive Utilities (examples) ========= */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+  h1 {
+    font-size: 1.8rem;
+  }
+}
+/* Responsive Font Sizes */
+@media (max-width: 1200px) {
+  body {
+    font-size: 15px;
+  }
+  h1 {
+    font-size: 2.8rem;
+  }
+  h2 {
+    font-size: 2.2rem;
+  }
+  h3 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 992px) {
+  body {
+    font-size: 14px;
+  }
+  h1 {
+    font-size: 2.4rem;
+  }
+  h2 {
+    font-size: 1.9rem;
+  }
+  h3 {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 13px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  h1 {
+    font-size: 2rem;
+    text-align: center;
+  }
+  h2 {
+    font-size: 1.7rem;
+    text-align: center;
+  }
+  h3 {
+    font-size: 1.4rem;
+    text-align: center;
+  }
+}
+
+/* Responsive Container Padding */
+.container {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+/* Navbar Collapse Adjustments */
+.navbar-collapse {
+  background-color: var(--background-color);
+  padding: 1rem;
+}
+
+/* Responsive Button Full width on small devices */
+.btn {
+  min-width: 120px;
+}
+
+@media (max-width: 576px) {
+  .btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+/* Image and card responsiveness */
+img, .card {
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 576px) {
+  .card {
+    margin-bottom: 20px;
+  }
+}
