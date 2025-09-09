@@ -12,21 +12,75 @@ const sections = [
 ];
 
 const exploreMoreSections = [
-  { id: "about", label: "About Us", desc: "Company heritage, vision, and global presence overview.", imgSrc: "/images/about_us_thumb.jpg", },
-  { id: "contact", label: "Contact Us", desc: "Reach our offices, send inquiries, or apply for careers.", imgSrc: "/images/contact_us_thumb.jpg" },
-  { id: "careers", label: "Careers", desc: "Join FutureTech and innovate with our R&D culture.", imgSrc: "/images/careers_thumb.jpg" },
+  {
+    id: "about",
+    label: "About Us",
+    desc: "Company heritage, vision, and global presence overview.",
+    imgSrc: "/images/futuretech.png",
+    link: "/aboutus",
+  },
+  {
+    id: "contact",
+    label: "Contact Us",
+    desc: "Reach our offices, send inquiries, or apply for careers.",
+    imgSrc: "/images/contactus.png",
+    link: "/contactus",
+  },
+  {
+    id: "careers",
+    label: "Careers",
+    desc: "Join FutureTech and innovate with our R&D culture.",
+    imgSrc: "/images/careers.png",
+    link: "/careers",
+  },
 ];
 
 const solutionsSections = [
-  { id: "solutions-fintech", label: "Shark Fin Antenna", desc: "Custom-designed shark fin antennas with AM/FM, GPS, LTE.", imgSrc: "/images/shark_fin_antenna.jpg", link: "/solutions/1" },
-  { id: "solutions-adas", label: "ADAS & Smart Mobility", desc: "Cameras, LiDAR, Radar, driver monitoring systems.", imgSrc: "/images/adas_system.jpeg", link: "/solutions/2" },
-  { id: "solutions-rf", label: "Wireless Charging Solutions", desc: "Next-gen wireless charging for automotive, heavy-duty vehicles, and drones.", imgSrc: "/images/wireless_charging.jpeg", link: "/solutions/3" },
-  { id: "solutions-emerging", label: "Keyless Entry System", desc: "Secure and convenient keyless entry solutions with rolling code encryption.", imgSrc: "/images/keyless.png", link: "/solutions/4" },
+  {
+    id: "solutions-fintech",
+    label: "Shark Fin Antenna",
+    desc: "Custom-designed shark fin antennas with AM/FM, GPS, LTE.",
+    imgSrc: "/images/shark_fin_antenna.jpg",
+    link: "/solutions/1",
+  },
+  {
+    id: "solutions-adas",
+    label: "ADAS & Smart Mobility",
+    desc: "Cameras, LiDAR, Radar, driver monitoring systems.",
+    imgSrc: "/images/adas_system.jpeg",
+    link: "/solutions/2",
+  },
+  {
+    id: "solutions-rf",
+    label: "Wireless Charging Solutions",
+    desc: "Next-gen wireless charging for automotive, heavy-duty vehicles, and drones.",
+    imgSrc: "/images/wireless_charging.jpeg",
+    link: "/solutions/3",
+  },
+  {
+    id: "solutions-emerging",
+    label: "Keyless Entry System",
+    desc: "Secure and convenient keyless entry solutions with rolling code encryption.",
+    imgSrc: "/images/keyless.png",
+    link: "/solutions/4",
+  },
 ];
 
 const dropdownVariants = {
-  open: { opacity: 1, scaleY: 1, display: "block", transition: { duration: 0.25, ease: "easeOut" }, transformOrigin: "top center" },
-  closed: { opacity: 0, scaleY: 0, transitionEnd: { display: "none" }, transition: { duration: 0.2, ease: "easeIn" }, transformOrigin: "top center" },
+  open: {
+    opacity: 1,
+    scaleY: 1,
+    display: "block",
+    transition: { duration: 0.25, ease: "easeOut" },
+    transformOrigin: "top center",
+  },
+  closed: {
+    opacity: 0,
+    scaleY: 0,
+    transitionEnd: { display: "none" },
+    transition: { duration: 0.2, ease: "easeIn" },
+    transformOrigin: "top center",
+  },
 };
 
 const Header = () => {
@@ -36,7 +90,15 @@ const Header = () => {
   const [solutionsOpen, setSolutionsOpen] = useState(false);
   const [exploreOpen, setExploreOpen] = useState(false);
 
-  // ✅ Scroll spy only on homepage
+  // Helper to determine parent dropdown active state based on the path
+  const getActiveDropdownParent = (pathname) => {
+    if (solutionsSections.some((s) => s.link === pathname)) return "solutions";
+    if (exploreMoreSections.some((e) => e.link === pathname))
+      return "exploreMore";
+    return null;
+  };
+
+  // Scroll spy only on homepage
   useEffect(() => {
     if (location.pathname !== "/") return;
 
@@ -59,10 +121,19 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [location.pathname]);
 
-  // ✅ Route-based highlight for all pages
+  // Route-based highlight including dropdown parents
   useEffect(() => {
     const matched = sections.find((sec) => sec.path === location.pathname);
-    if (matched) setActiveSection(matched.id);
+    if (matched) {
+      setActiveSection(matched.id);
+      return;
+    }
+    const dropParent = getActiveDropdownParent(location.pathname);
+    if (dropParent) {
+      setActiveSection(dropParent);
+      return;
+    }
+    setActiveSection(null);
   }, [location.pathname]);
 
   const collapseMenus = () => {
@@ -74,6 +145,7 @@ const Header = () => {
   const renderDropdownItems = (items) =>
     items.map(({ id, label, desc, imgSrc, link }) => {
       const ItemTag = link ? Link : "a";
+      const isActive = location.pathname === link;
       return (
         <ItemTag
           key={id}
@@ -85,12 +157,13 @@ const Header = () => {
             alignItems: "center",
             cursor: "pointer",
             textDecoration: "none",
-            color: activeSection === id ? "#007BFF" : "#555",
-            fontWeight: activeSection === id ? "600" : "normal",
+            color: isActive ? "#007BFF" : "#555",
+            fontWeight: isActive ? "600" : "normal",
             padding: "10px 0",
             borderBottom: "1px solid #ddd",
             transition: "background-color 0.2s",
           }}
+          aria-current={isActive ? "page" : undefined}
           onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#e9f5ff")}
           onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
         >
@@ -98,11 +171,28 @@ const Header = () => {
             src={imgSrc}
             alt={label}
             loading="lazy"
-            style={{ width: 70, height: 50, objectFit: "cover", borderRadius: 6, marginRight: 15, boxShadow: "0 0 10px #007BFF", flexShrink: 0 }}
+            style={{
+              width: 70,
+              height: 50,
+              objectFit: "cover",
+              borderRadius: 6,
+              marginRight: 15,
+              boxShadow: "0 0 10px #007BFF",
+              flexShrink: 0,
+            }}
           />
           <div>
             <div style={{ fontSize: 16, marginBottom: 6 }}>{label}</div>
-            <div style={{ fontSize: 13, color: "#777", maxWidth: 320, lineHeight: 1.3 }}>{desc}</div>
+            <div
+              style={{
+                fontSize: 13,
+                color: "#777",
+                maxWidth: 320,
+                lineHeight: 1.3,
+              }}
+            >
+              {desc}
+            </div>
           </div>
         </ItemTag>
       );
@@ -124,20 +214,20 @@ const Header = () => {
       }}
     >
       <Container>
-       <Navbar.Brand 
-  as={Link} 
-  to="/" 
-  className="fw-bold text-primary d-flex align-items-center" 
-  style={{ fontSize: "1.5rem", letterSpacing: "2px" }} 
-  onClick={collapseMenus}
->
-  <img
-    src="/futuretech.png"  // replace with your actual logo file path
-    alt="FutureTech"
-    style={{ height: 75, marginRight: 12 }}
-    loading="lazy"
-  /> 
-</Navbar.Brand>
+        <Navbar.Brand
+          as={Link}
+          to="/"
+          className="fw-bold text-primary d-flex align-items-center"
+          style={{ fontSize: "1.5rem", letterSpacing: "2px" }}
+          onClick={collapseMenus}
+        >
+          <img
+            src="/futuretech.png"
+            alt="FutureTech"
+            style={{ height: 75, marginRight: 12 }}
+            loading="lazy"
+          />
+        </Navbar.Brand>
 
         <Navbar.Toggle aria-controls="main-navbar-nav" />
         <Navbar.Collapse id="main-navbar-nav">
@@ -158,7 +248,15 @@ const Header = () => {
                 {activeSection === id && (
                   <motion.div
                     layoutId="underline"
-                    style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 3, backgroundColor: "#007BFF", borderRadius: 2 }}
+                    style={{
+                      position: "absolute",
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      height: 3,
+                      backgroundColor: "#007BFF",
+                      borderRadius: 2,
+                    }}
                     initial={{ opacity: 0, scaleX: 0 }}
                     animate={{ opacity: 1, scaleX: 1 }}
                     exit={{ opacity: 0, scaleX: 0 }}
@@ -167,6 +265,7 @@ const Header = () => {
                 )}
               </Nav.Link>
             ))}
+
             {/* Solutions Dropdown */}
             <Nav.Item
               onMouseEnter={() => setSolutionsOpen(true)}
@@ -174,9 +273,25 @@ const Header = () => {
               className="position-relative"
               style={{ cursor: "pointer", padding: "0 0.75rem" }}
             >
-              <Nav.Link className="d-flex align-items-center">
+              <Nav.Link
+                className="d-flex align-items-center"
+                style={{
+                  color: activeSection === "solutions" ? "#007BFF" : undefined,
+                  fontWeight: activeSection === "solutions" ? "600" : "normal",
+                }}
+                aria-expanded={solutionsOpen}
+                aria-haspopup="true"
+                role="button"
+              >
                 Solutions
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" className="bi bi-caret-down-fill ms-1" viewBox="0 0 16 16">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="12"
+                  height="12"
+                  fill="currentColor"
+                  className="bi bi-caret-down-fill ms-1"
+                  viewBox="0 0 16 16"
+                >
                   <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592c.86 0 1.319 1.013.752 1.658l-4.796 5.482a1 1 0 0 1-1.505 0z" />
                 </svg>
               </Nav.Link>
@@ -217,9 +332,25 @@ const Header = () => {
               className="position-relative"
               style={{ cursor: "pointer", padding: "0 0.75rem" }}
             >
-              <Nav.Link className="d-flex align-items-center">
+              <Nav.Link
+                className="d-flex align-items-center"
+                style={{
+                  color: activeSection === "exploreMore" ? "#007BFF" : undefined,
+                  fontWeight: activeSection === "exploreMore" ? "600" : "normal",
+                }}
+                aria-expanded={exploreOpen}
+                aria-haspopup="true"
+                role="button"
+              >
                 Explore More
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" className="bi bi-caret-down-fill ms-1" viewBox="0 0 16 16">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="12"
+                  height="12"
+                  fill="currentColor"
+                  className="bi bi-caret-down-fill ms-1"
+                  viewBox="0 0 16 16"
+                >
                   <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592c.86 0 1.319 1.013.752 1.658l-4.796 5.482a1 1 0 0 1-1.505 0z" />
                 </svg>
               </Nav.Link>

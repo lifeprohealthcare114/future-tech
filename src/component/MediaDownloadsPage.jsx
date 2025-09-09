@@ -9,6 +9,7 @@ import {
   Image,
   Tab,
   Nav,
+  Modal,
 } from "react-bootstrap";
 import { FileText, Download, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
@@ -115,6 +116,15 @@ const sectionVariants = {
 
 const MediaDownloadsPage = () => {
   const [key, setKey] = useState("logos");
+  const [modalShow, setModalShow] = useState(false);
+  const [modalImage, setModalImage] = useState({ src: "", alt: "" });
+
+  const handleImageClick = (src, alt) => {
+    setModalImage({ src, alt });
+    setModalShow(true);
+  };
+
+  const handleModalClose = () => setModalShow(false);
 
   return (
     <Container className="py-5">
@@ -310,7 +320,16 @@ const MediaDownloadsPage = () => {
                       alt={alt}
                       rounded
                       fluid
-                      style={{ maxHeight: 140, objectFit: "cover" }}
+                      style={{ maxHeight: 140, objectFit: "cover", cursor: "pointer" }}
+                      onClick={() => handleImageClick(src, alt)}
+                      aria-haspopup="dialog"
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          handleImageClick(src, alt);
+                        }
+                      }}
                     />
                   </Col>
                 ))}
@@ -345,6 +364,27 @@ const MediaDownloadsPage = () => {
           </Tab.Content>
         </Tab.Container>
       </motion.section>
+
+      {/* Modal for full image view */}
+      <Modal
+        show={modalShow}
+        onHide={handleModalClose}
+        centered
+        size="lg"
+        aria-labelledby="modal-image-title"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="modal-image-title">{modalImage.alt}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="text-center">
+          <Image
+            src={modalImage.src}
+            alt={modalImage.alt}
+            fluid
+            style={{ maxHeight: "70vh", objectFit: "contain" }}
+          />
+        </Modal.Body>
+      </Modal>
     </Container>
   );
 };

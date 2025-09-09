@@ -71,7 +71,7 @@ const AboutUsPage = () => {
       <Container>
         {/* Facility Image for visualization */}
         <img
-          src="/images/futuretech_facility_overview.jpg"
+          src="/images/futuretech.png"
           alt="FutureTech Dynamics Facility Overview"
           style={{
             width: "100%",

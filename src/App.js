@@ -10,6 +10,8 @@ import MediaDownloadsPage from "./component/MediaDownloadsPage";
 import ProjectsCaseStudiesPage from "./component/ProjectsCaseStudiesPage"; 
 import AboutUsPage from "./component/AboutUsPage"; 
 import ContactUsPage from "./component/ContactUsPage"; 
+import CareersPage from "./component/CareersPage"; 
+
 import Footer from "./Footer"; 
 import ScrollToTop from './ScrollToTop';
 import './styles/theme.css';
@@ -37,6 +39,8 @@ function App() {
         <Route path="/aboutus" element={<AboutUsPage />} />
         <Route path="/contactus" element={<ContactUsPage />} />
         <Route path="/projects" element={<ProjectsCaseStudiesPage />} />
+        <Route path="/careers" element={<CareersPage />} />
+
 
 
       </Routes>
