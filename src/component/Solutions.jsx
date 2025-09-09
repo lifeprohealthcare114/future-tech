@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Container, Tab, Nav, Button, Row, Col, Card } from "react-bootstrap";
 import { motion } from "framer-motion";
 import {
@@ -292,18 +292,19 @@ const Solutions = () => {
                     ))}
                   </ul>
 
-                  <a
+                  <Button
                     href={sol.brochure}
                     download
-                    className="btn btn-primary mt-3"
+                    variant="primary"
+                    className="mt-3"
                     style={{ borderRadius: "6px" }}
                   >
                     Download Brochure
-                  </a>
+                  </Button>
                 </Col>
               </Row>
 
-              {/* Extra section only for Shark Fin Antenna */}
+              {/* Shark Fin Antenna extra */}
               {key === "1" && (
                 <>
                   <h4 className="fw-bold mt-5 mb-3" style={{ color: "#007BFF" }}>
@@ -351,7 +352,7 @@ const Solutions = () => {
                 </>
               )}
 
-              {/* Extra section for ADAS */}
+              {/* ADAS extra */}
               {key === "2" && sol.extra && (
                 <Row className="mt-5">
                   <Col>
@@ -377,7 +378,7 @@ const Solutions = () => {
                 </Row>
               )}
 
-              {/* Extra section only for Wireless Charging */}
+              {/* Wireless Charging extra */}
               {key === "3" && sol.extra && (
                 <Row className="mt-5 align-items-center">
                   <Col md={6}>
@@ -413,7 +414,7 @@ const Solutions = () => {
                 </Row>
               )}
 
-              {/* Extra section only for Keyless Entry */}
+              {/* Keyless Entry extra */}
               {key === "4" && sol.extra && (
                 <Row className="mt-5 align-items-center">
                   <Col md={6}>

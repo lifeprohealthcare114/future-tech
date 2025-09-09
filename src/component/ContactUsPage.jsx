@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button, Tooltip, OverlayTrigger } from "react-bootstrap";
-import { PhoneFill, EnvelopeFill, GeoAltFill, ChatDots } from "react-bootstrap-icons";
+import { PhoneFill, EnvelopeFill, GeoAltFill, ChatDots, X } from "react-bootstrap-icons";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Embed Google Maps iframe URLs for each of the addresses (replace with your addresses)
 const maps = {
   yamunaNagar: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3443.226876621854!2d77.30023301506106!3d30.127673881838736!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cdd0cdb3580e3%3A0xc9cb78767b4f41e7!2sYamuna%20Nagar!5e0!3m2!1sen!2sin!4v1678546880200!5m2!1sen!2sin",
   vadodara: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684.317198917473!2d73.13496231498296!3d22.30715802834774!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e84d2d1fc9f9b%3A0x613b2fbcfc26e4d!2sVadodara!5e0!3m2!1sen!2sin!4v1678546998471!5m2!1sen!2sin",
@@ -36,10 +35,10 @@ const locations = [
 const tooltip = (text) => <Tooltip id={`tooltip-${text}`}>{text}</Tooltip>;
 
 const ContactUsPage = () => {
-  // Form state and validation
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  const [showChatbot, setShowChatbot] = useState(true);
 
   const validate = () => {
     const newErrors = {};
@@ -63,16 +62,17 @@ const ContactUsPage = () => {
       setErrors(formErrors);
       return;
     }
-    // Replace with your submission logic (API call etc)
     setSubmitted(true);
+    setTimeout(() => setSubmitted(false), 3000);
+    setFormData({ name: "", email: "", message: "" });
   };
 
   return (
-    <Container className="py-5" style={{ position: "relative" }}>
+    <Container className="py-5">
       <h1 className="mb-4 text-center text-primary">Contact Us</h1>
 
-      {/* Contact Information */}
       <Row className="mb-5 gx-5">
+        {/* Locations & Contacts */}
         <Col md={6}>
           <h4 className="mb-3">Our Locations</h4>
           {locations.map(({ title, address, mapUrl, icon }) => (
@@ -83,7 +83,11 @@ const ContactUsPage = () => {
               </h5>
               <p>{address}</p>
               <div
-                style={{ borderRadius: "8px", overflow: "hidden", boxShadow: "0 0 15px #0d6efd80" }}
+                style={{
+                  borderRadius: "12px",
+                  overflow: "hidden",
+                  boxShadow: "0 0 15px #0d6efd40",
+                }}
               >
                 <iframe
                   src={mapUrl}
@@ -96,18 +100,19 @@ const ContactUsPage = () => {
               </div>
             </div>
           ))}
+
           <h4 className="mt-4 mb-3">Get in Touch</h4>
           {phoneContacts.map(({ icon, value }) => (
             <OverlayTrigger key={value} placement="top" overlay={tooltip("Call us")}>
-              <p style={{ cursor: "pointer", userSelect: "none" }} className="d-flex align-items-center">
-                <span className="text-primary me-2">{icon}</span> {value}
+              <p className="d-flex align-items-center text-primary" style={{ cursor: "pointer" }}>
+                {icon} <span className="ms-2">{value}</span>
               </p>
             </OverlayTrigger>
           ))}
           {emailContacts.map(({ icon, value }) => (
             <OverlayTrigger key={value} placement="top" overlay={tooltip("Send us an email")}>
-              <p style={{ cursor: "pointer", userSelect: "none" }} className="d-flex align-items-center">
-                <span className="text-primary me-2">{icon}</span> {value}
+              <p className="d-flex align-items-center text-primary" style={{ cursor: "pointer" }}>
+                {icon} <span className="ms-2">{value}</span>
               </p>
             </OverlayTrigger>
           ))}
@@ -126,8 +131,6 @@ const ContactUsPage = () => {
                 value={formData.name}
                 onChange={handleInputChange}
                 isInvalid={!!errors.name}
-                required
-                aria-describedby="nameHelpBlock"
               />
               <label htmlFor="name">Name</label>
               <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>
@@ -142,8 +145,6 @@ const ContactUsPage = () => {
                 value={formData.email}
                 onChange={handleInputChange}
                 isInvalid={!!errors.email}
-                required
-                aria-describedby="emailHelpBlock"
               />
               <label htmlFor="email">Email</label>
               <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
@@ -159,51 +160,69 @@ const ContactUsPage = () => {
                 onChange={handleInputChange}
                 style={{ height: "120px", resize: "none" }}
                 isInvalid={!!errors.message}
-                required
-                aria-describedby="messageHelpBlock"
               />
               <label htmlFor="message">Message</label>
               <Form.Control.Feedback type="invalid">{errors.message}</Form.Control.Feedback>
             </Form.Floating>
 
-            <motion.div
-              whileTap={{ scale: 0.9 }}
-              style={{ borderRadius: "50%", display: "inline-block" }}
-              className="mb-2"
-            >
-              <Button type="submit" variant="primary" className="px-4 py-2" disabled={submitted}>
-                {submitted ? "Submitted!" : "Submit"}
+            <motion.div whileTap={{ scale: 0.95 }} className="d-inline-block">
+              <Button type="submit" variant="primary" disabled={submitted}>
+                {submitted ? "Message Sent!" : "Submit"}
               </Button>
             </motion.div>
           </Form>
         </Col>
       </Row>
 
-      {/* Chatbot Widget */}
-      <motion.div
-        initial={{ opacity: 0, bottom: -80 }}
-        animate={{ opacity: 1, bottom: 30 }}
-        transition={{ type: "spring", stiffness: 120 }}
-        style={{
-          position: "fixed",
-          right: 30,
-          bottom: 30,
-          background: "linear-gradient(135deg, #007BFF, #00BFFF)",
-          borderRadius: "50%",
-          boxShadow: "0 0 20px #00BFFF",
-          width: 60,
-          height: 60,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          cursor: "pointer",
-          zIndex: 1000,
-        }}
-        aria-label="Open live chat support"
-        onClick={() => alert("Chatbot widget clicked - integration pending")}
-      >
-        <ChatDots size={32} color="white" />
-      </motion.div>
+      {/* Draggable & Dismissible Chatbot */}
+      <AnimatePresence>
+        {showChatbot && (
+          <motion.div
+            drag
+            dragConstraints={{ top: 0, bottom: window.innerHeight - 60, left: 0, right: window.innerWidth - 60 }}
+            initial={{ opacity: 0, bottom: -80 }}
+            animate={{ opacity: 1, bottom: 30 }}
+            exit={{ opacity: 0, bottom: -80 }}
+            transition={{ type: "spring", stiffness: 120 }}
+            style={{
+              position: "fixed",
+              right: 30,
+              bottom: 30,
+              background: "linear-gradient(135deg, #007BFF, #00BFFF)",
+              borderRadius: "50%",
+              boxShadow: "0 0 20px #00BFFF",
+              width: 60,
+              height: 60,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              cursor: "grab",
+              zIndex: 1000,
+            }}
+          >
+            <div
+              onClick={() => setShowChatbot(false)}
+              style={{
+                position: "absolute",
+                top: -5,
+                right: -5,
+                background: "#fff",
+                borderRadius: "50%",
+                width: 20,
+                height: 20,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                cursor: "pointer",
+                boxShadow: "0 0 5px #0003",
+              }}
+            >
+              <X size={12} color="#007BFF" />
+            </div>
+            <ChatDots size={32} color="white" />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </Container>
   );
 };

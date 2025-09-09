@@ -124,9 +124,21 @@ const Header = () => {
       }}
     >
       <Container>
-        <Navbar.Brand as={Link} to="/" className="fw-bold text-primary" style={{ fontSize: "1.5rem", letterSpacing: "2px" }} onClick={collapseMenus}>
-          FutureTech
-        </Navbar.Brand>
+       <Navbar.Brand 
+  as={Link} 
+  to="/" 
+  className="fw-bold text-primary d-flex align-items-center" 
+  style={{ fontSize: "1.5rem", letterSpacing: "2px" }} 
+  onClick={collapseMenus}
+>
+  <img
+    src="/futuretech.png"  // replace with your actual logo file path
+    alt="FutureTech"
+    style={{ height: 40, marginRight: 12 }}
+    loading="lazy"
+  /> 
+</Navbar.Brand>
+
         <Navbar.Toggle aria-controls="main-navbar-nav" />
         <Navbar.Collapse id="main-navbar-nav">
           <Nav className="ms-auto align-items-center">

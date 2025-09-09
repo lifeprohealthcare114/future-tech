@@ -18,7 +18,7 @@ const IconPlaceholder = ({ label }) => (
 );
 
 // Counter component animates from 0 to target number on scroll into viewport
-const Counter = ({ end, duration = 2 }) => {
+const Counter = ({ end, duration = 2, suffix = "" }) => {
   const [count, setCount] = useState(0);
   const ref = useRef();
   const started = useRef(false);
@@ -48,7 +48,8 @@ const Counter = ({ end, duration = 2 }) => {
 
   return (
     <div ref={ref} style={{ fontSize: 36, fontWeight: "700", color: "#007BFF" }}>
-      {count}+
+      {count}
+      {suffix}
     </div>
   );
 };
@@ -56,13 +57,13 @@ const Counter = ({ end, duration = 2 }) => {
 // 🔥 Full Enhanced Animated Tech Background
 const AnimatedBackground = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  
+
   useEffect(() => {
     const handleMouseMove = (e) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
   const techElements = [
@@ -86,7 +87,8 @@ const AnimatedBackground = () => {
         height: "100vh",
         zIndex: -1,
         overflow: "hidden",
-        background: "linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%)",
+        background:
+          "linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%)",
         backgroundSize: "400% 400%",
       }}
     >
@@ -104,16 +106,17 @@ const AnimatedBackground = () => {
           position: "absolute",
           width: "100%",
           height: "100%",
-          background: "linear-gradient(135deg, rgba(102,126,234,0.8) 0%, rgba(118,75,162,0.6) 25%, rgba(240,147,251,0.4) 50%, rgba(245,87,108,0.6) 75%, rgba(79,172,254,0.8) 100%)",
+          background:
+            "linear-gradient(135deg, rgba(102,126,234,0.8) 0%, rgba(118,75,162,0.6) 25%, rgba(240,147,251,0.4) 50%, rgba(245,87,108,0.6) 75%, rgba(79,172,254,0.8) 100%)",
           backgroundSize: "400% 400%",
         }}
       />
 
       {/* Pulsing Grid Effect */}
       <motion.div
-        animate={{ 
+        animate={{
           opacity: [0.1, 0.3, 0.1],
-          scale: [1, 1.02, 1]
+          scale: [1, 1.02, 1],
         }}
         transition={{ duration: 4, repeat: Infinity }}
         style={{
@@ -128,9 +131,9 @@ const AnimatedBackground = () => {
 
       {/* Circuit Board Pattern */}
       <motion.div
-        animate={{ 
+        animate={{
           opacity: [0.2, 0.4, 0.2],
-          x: [0, 20, 0]
+          x: [0, 20, 0],
         }}
         transition={{ duration: 6, repeat: Infinity }}
         style={{
@@ -152,20 +155,30 @@ const AnimatedBackground = () => {
         <motion.div
           key={i}
           initial={{
-            x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1200),
-            y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 800),
+            x:
+              Math.random() *
+              (typeof window !== "undefined" ? window.innerWidth : 1200),
+            y:
+              Math.random() *
+              (typeof window !== "undefined" ? window.innerHeight : 800),
             rotate: 0,
           }}
           animate={{
             x: [
-              Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1200),
-              Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1200),
-              Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1200),
+              Math.random() *
+                (typeof window !== "undefined" ? window.innerWidth : 1200),
+              Math.random() *
+                (typeof window !== "undefined" ? window.innerWidth : 1200),
+              Math.random() *
+                (typeof window !== "undefined" ? window.innerWidth : 1200),
             ],
             y: [
-              Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 800),
-              Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 800),
-              Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 800),
+              Math.random() *
+                (typeof window !== "undefined" ? window.innerHeight : 800),
+              Math.random() *
+                (typeof window !== "undefined" ? window.innerHeight : 800),
+              Math.random() *
+                (typeof window !== "undefined" ? window.innerHeight : 800),
             ],
             rotate: [0, 360],
           }}
@@ -198,19 +211,27 @@ const AnimatedBackground = () => {
         <motion.div
           key={`orb-${i}`}
           initial={{
-            x: (typeof window !== 'undefined' ? window.innerWidth : 1200) / 2,
-            y: (typeof window !== 'undefined' ? window.innerHeight : 800) / 2,
+            x:
+              (typeof window !== "undefined" ? window.innerWidth : 1200) / 2,
+            y:
+              (typeof window !== "undefined" ? window.innerHeight : 800) / 2,
           }}
           animate={{
             x: [
-              (typeof window !== 'undefined' ? window.innerWidth : 1200) / 2 + Math.cos(i * 0.4) * (200 + i * 20),
-              (typeof window !== 'undefined' ? window.innerWidth : 1200) / 2 + Math.cos(i * 0.4 + Math.PI) * (200 + i * 20),
-              (typeof window !== 'undefined' ? window.innerWidth : 1200) / 2 + Math.cos(i * 0.4) * (200 + i * 20),
+              (typeof window !== "undefined" ? window.innerWidth : 1200) / 2 +
+                Math.cos(i * 0.4) * (200 + i * 20),
+              (typeof window !== "undefined" ? window.innerWidth : 1200) / 2 +
+                Math.cos(i * 0.4 + Math.PI) * (200 + i * 20),
+              (typeof window !== "undefined" ? window.innerWidth : 1200) / 2 +
+                Math.cos(i * 0.4) * (200 + i * 20),
             ],
             y: [
-              (typeof window !== 'undefined' ? window.innerHeight : 800) / 2 + Math.sin(i * 0.4) * (200 + i * 20),
-              (typeof window !== 'undefined' ? window.innerHeight : 800) / 2 + Math.sin(i * 0.4 + Math.PI) * (200 + i * 20),
-              (typeof window !== 'undefined' ? window.innerHeight : 800) / 2 + Math.sin(i * 0.4) * (200 + i * 20),
+              (typeof window !== "undefined" ? window.innerHeight : 800) / 2 +
+                Math.sin(i * 0.4) * (200 + i * 20),
+              (typeof window !== "undefined" ? window.innerHeight : 800) / 2 +
+                Math.sin(i * 0.4 + Math.PI) * (200 + i * 20),
+              (typeof window !== "undefined" ? window.innerHeight : 800) / 2 +
+                Math.sin(i * 0.4) * (200 + i * 20),
             ],
           }}
           transition={{
@@ -226,7 +247,9 @@ const AnimatedBackground = () => {
             background: `radial-gradient(circle, 
               rgba(${Math.random() * 255}, ${Math.random() * 255}, 255, 0.9) 0%, 
               rgba(255, ${Math.random() * 255}, ${Math.random() * 255}, 0.6) 100%)`,
-            boxShadow: `0 0 20px rgba(${Math.random() * 255}, ${Math.random() * 255}, 255, 0.8)`,
+            boxShadow: `0 0 20px rgba(${Math.random() * 255}, ${
+              Math.random() * 255
+            }, 255, 0.8)`,
           }}
         />
       ))}
@@ -243,7 +266,8 @@ const AnimatedBackground = () => {
           width: "100px",
           height: "100px",
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%)",
+          background:
+            "radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%)",
           pointerEvents: "none",
           zIndex: 2,
           border: "2px solid rgba(255,255,255,0.2)",
@@ -266,7 +290,8 @@ const AnimatedBackground = () => {
           left: 0,
           width: "100%",
           height: "4px",
-          background: "linear-gradient(90deg, transparent 0%, rgba(0,255,255,0.8) 50%, transparent 100%)",
+          background:
+            "linear-gradient(90deg, transparent 0%, rgba(0,255,255,0.8) 50%, transparent 100%)",
           boxShadow: "0 0 20px rgba(0,255,255,0.6)",
         }}
       />
@@ -277,7 +302,8 @@ const AnimatedBackground = () => {
           key={`binary-${i}`}
           initial={{ y: -100, opacity: 0 }}
           animate={{
-            y: (typeof window !== 'undefined' ? window.innerHeight : 800) + 100,
+            y:
+              (typeof window !== "undefined" ? window.innerHeight : 800) + 100,
             opacity: [0, 1, 1, 0],
           }}
           transition={{
@@ -311,7 +337,10 @@ const quickHighlights = [
   { iconLabel: "50+", text: "Years Automotive Expertise" },
   { iconLabel: "50 GHz", text: "RF & Microwave Innovation" },
   { iconLabel: "ADAS", text: "Advanced ADAS & Wireless Components" },
-  { iconLabel: "Global", text: "Global Presence (India, USA, Germany, Brazil)" },
+  {
+    iconLabel: "Global",
+    text: "Global Presence (India, USA, Germany, Brazil)",
+  },
 ];
 
 const featuredSolutions = [
@@ -341,28 +370,6 @@ const featuredSolutions = [
     imgSrc: "/images/keyless.png",
   },
 ];
-
-// Simple rotating performance chart placeholder
-const PerformanceChart = () => (
-  <motion.div
-    animate={{ rotate: 360 }}
-    transition={{ repeat: Infinity, duration: 5, ease: "linear" }}
-    style={{
-      width: 60,
-      height: 60,
-      borderRadius: "50%",
-      border: "4px solid #007BFF",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      fontWeight: "bold",
-      color: "#007BFF",
-      fontSize: 18,
-    }}
-  >
-    99%
-  </motion.div>
-);
 
 const clientLogos = [
   { alt: "GM", src: "/logos/mg.png" },
@@ -410,7 +417,7 @@ const HomePage = () => {
             maxWidth: "700px",
             marginBottom: 24,
             color: "#FFFFFF",
-            textShadow: "0 0 15px rgba(0,0,0,0.7)"
+            textShadow: "0 0 15px rgba(0,0,0,0.7)",
           }}
         >
           Enabling the Future of Mobility & Smart Electronics
@@ -454,28 +461,116 @@ const HomePage = () => {
       >
         <Container>
           <Row className="text-center">
-            {quickHighlights.map(({ iconLabel, text }, index) => (
-              <Col key={index} md={3} sm={6} xs={12} className="mb-4">
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  custom={index}
-                  variants={fadeInUp}
-                >
-                  <IconPlaceholder label={iconLabel} />
-                  <div style={{ fontSize: 18 }}>{text}</div>
-                </motion.div>
-              </Col>
-            ))}
+            {quickHighlights.map(({ iconLabel, text }, index) => {
+              const number = parseInt(iconLabel);
+              const hasNumber = !isNaN(number);
+
+              return (
+                <Col key={index} md={3} sm={6} xs={12} className="mb-4">
+                  <motion.div
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    custom={index}
+                    variants={fadeInUp}
+                  >
+                    {hasNumber ? (
+                      <Counter
+                        end={number}
+                        duration={2}
+                        suffix={iconLabel.includes("+") ? "+" : ""}
+                      />
+                    ) : (
+                      <IconPlaceholder label={iconLabel} />
+                    )}
+                    <div style={{ fontSize: 18 }}>{text}</div>
+                  </motion.div>
+                </Col>
+              );
+            })}
           </Row>
         </Container>
       </section>
 
-      {/* Featured Solutions Section */}
+{/* Featured Solutions Section */}
+
+<section
+  id="solutions"
+  style={{ paddingTop: 60, paddingBottom: 60, backgroundColor: "#F9FAFB" }}
+>
+  <Container>
+    <motion.h2
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={fadeInUp}
+      style={{ textAlign: "center", marginBottom: 50 }}
+    >
+      Featured Solutions
+    </motion.h2>
+
+    <Carousel indicators={true} interval={5000} pause="hover">
+      {featuredSolutions.map((solution, idx) => (
+        <Carousel.Item key={solution.id}>
+          <Row className="align-items-center justify-content-center">
+            {/* Image on left */}
+            <Col md={6}>
+              <motion.img
+                src={solution.imgSrc}
+                alt={solution.title}
+                whileHover={{ scale: 1.05 }}
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                style={{
+                  width: "100%",
+                  height: "400px",
+                  objectFit: "cover",
+                  borderRadius: "12px",
+                  boxShadow: "0 6px 18px rgba(0,0,0,0.2)",
+                }}
+              />
+            </Col>
+
+            {/* Content on right */}
+            <Col md={6}>
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                custom={idx}
+                variants={fadeInUp}
+              >
+                <h3 style={{ fontWeight: "700", marginBottom: 16 }}>
+                  {solution.title}
+                </h3>
+                <p style={{ fontSize: 16, color: "#555", marginBottom: 24 }}>
+                  {solution.description}
+                </p>
+                <Link to={`/solutions/${solution.id}`}>
+                  <Button variant="primary" size="lg">
+                    Learn More →
+                  </Button>
+                </Link>
+              </motion.div>
+            </Col>
+          </Row>
+        </Carousel.Item>
+      ))}
+    </Carousel>
+  </Container>
+</section>
+
+
+
+      {/* Clients Carousel Section */}
       <section
-        id="solutions"
-        style={{ paddingTop: 40, paddingBottom: 40, backgroundColor: "#F9FAFB" }}
+        style={{
+          paddingTop: 40,
+          paddingBottom: 40,
+          backgroundColor: "#FFFFFF",
+        }}
       >
         <Container>
           <motion.h2
@@ -483,128 +578,34 @@ const HomePage = () => {
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeInUp}
-            style={{ textAlign: "center", marginBottom: 40, color: "#007BFF" }}
+            style={{ textAlign: "center", marginBottom: 40 }}
           >
-            Featured Solutions
+            Trusted By Leading Clients
           </motion.h2>
-          <Carousel indicators={false} interval={5000} pause="hover">
-            {featuredSolutions.map((solution, idx) => (
-              <Carousel.Item key={solution.id}>
-                <Row className="align-items-center justify-content-center">
-                  <Col md={6} className="text-center">
-                    <motion.img
-                      src={solution.imgSrc}
-                      alt={solution.title}
-                      whileHover={{ scale: 1.05 }}
-                      initial={{ opacity: 0, x: -50 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.6, delay: 0.2 }}
+          <Carousel indicators={false} interval={2500} pause={false}>
+            {clientLogos.map(({ alt, src }, i) => (
+              <Carousel.Item key={i}>
+                <Row className="justify-content-center align-items-center">
+                  <Col
+                    xs={6}
+                    md={2}
+                    className="d-flex justify-content-center mb-3 mb-md-0"
+                  >
+                    <img
+                      src={src}
+                      alt={alt}
                       style={{
+                        maxHeight: 80,
                         maxWidth: "100%",
-                        borderRadius: 20,
-                        boxShadow: "0 5px 15px rgba(0, 123, 255, 0.5)",
+                        objectFit: "contain",
                       }}
                     />
-                  </Col>
-                  <Col md={6}>
-                    <motion.div
-                      initial="hidden"
-                      whileInView="visible"
-                      viewport={{ once: true }}
-                      custom={idx}
-                      variants={fadeInUp}
-                    >
-                      <h3 style={{ color: "#212529" }}>{solution.title}</h3>
-                      <p style={{ fontSize: 16, color: "#212529" }}>
-                        {solution.description}
-                      </p>
-                      <PerformanceChart />
-                      <Link
-                        to={`/solutions/${solution.id}`}
-                        style={{ textDecoration: "none" }}
-                      >
-                        <Button
-                          variant="outline-primary"
-                          size="md"
-                          style={{ marginTop: 16 }}
-                        >
-                          Know More
-                        </Button>
-                      </Link>
-                    </motion.div>
                   </Col>
                 </Row>
               </Carousel.Item>
             ))}
           </Carousel>
         </Container>
-      </section>
-
-      {/* Clients Section */}
-      <section
-        style={{
-          backgroundColor: "#FFFFFF",
-          paddingTop: 24,
-          paddingBottom: 24,
-          textAlign: "center",
-        }}
-      >
-        <Container>
-          <motion.h4
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeInUp}
-            style={{ color: "#007BFF" }}
-          >
-            Trusted by Leading Brands
-          </motion.h4>
-          <Row className="justify-content-center mt-3">
-            {clientLogos.map(({ alt, src }, idx) => (
-              <Col xs={4} sm={2} md={1} key={idx} className="my-2">
-                <motion.img
-                  src={src}
-                  alt={alt}
-                  style={{ maxWidth: "100%", cursor: "pointer" }}
-                  whileHover={{ scale: 1.1 }}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.15, duration: 0.5 }}
-                />
-              </Col>
-            ))}
-          </Row>
-        </Container>
-      </section>
-
-      {/* About Section */}
-      <section
-        style={{
-          padding: 40,
-          textAlign: "center",
-          maxWidth: 600,
-          margin: "0 auto 60px",
-          color: "#212529",
-          backgroundColor: "#F9FAFB",
-        }}
-      >
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeInUp}
-        >
-          <h3>About FutureTech</h3>
-          <p style={{ fontSize: 16, color: "#6C757D" }}>
-            Driving next era of automotive innovation with advanced connectivity,
-            ADAS, and mechatronics. Learn more about our journey and values.
-          </p>
-          <Button href="#about" variant="outline-primary" size="lg">
-            Learn More About Us
-          </Button>
-        </motion.div>
       </section>
     </>
   );
