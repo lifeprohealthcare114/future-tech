@@ -12,13 +12,13 @@ const sections = [
 ];
 
 const exploreMoreSections = [
-  { id: "about", label: "About Us", desc: "Company heritage, vision, and global presence overview.", imgSrc: "/images/about_us_thumb.jpg" },
+  { id: "about", label: "About Us", desc: "Company heritage, vision, and global presence overview.", imgSrc: "/images/about_us_thumb.jpg", },
   { id: "contact", label: "Contact Us", desc: "Reach our offices, send inquiries, or apply for careers.", imgSrc: "/images/contact_us_thumb.jpg" },
   { id: "careers", label: "Careers", desc: "Join FutureTech and innovate with our R&D culture.", imgSrc: "/images/careers_thumb.jpg" },
 ];
 
 const solutionsSections = [
-  { id: "solutions-fintech", label: "FinTech – Shark Fin Antenna", desc: "Custom-designed shark fin antennas with AM/FM, GPS, LTE.", imgSrc: "/images/shark_fin_antenna.jpg", link: "/solutions/1" },
+  { id: "solutions-fintech", label: "Shark Fin Antenna", desc: "Custom-designed shark fin antennas with AM/FM, GPS, LTE.", imgSrc: "/images/shark_fin_antenna.jpg", link: "/solutions/1" },
   { id: "solutions-adas", label: "ADAS & Smart Mobility", desc: "Cameras, LiDAR, Radar, driver monitoring systems.", imgSrc: "/images/adas_system.jpeg", link: "/solutions/2" },
   { id: "solutions-rf", label: "Wireless Charging Solutions", desc: "Next-gen wireless charging for automotive, heavy-duty vehicles, and drones.", imgSrc: "/images/wireless_charging.jpeg", link: "/solutions/3" },
   { id: "solutions-emerging", label: "Keyless Entry System", desc: "Secure and convenient keyless entry solutions with rolling code encryption.", imgSrc: "/images/keyless.png", link: "/solutions/4" },
@@ -134,7 +134,7 @@ const Header = () => {
   <img
     src="/futuretech.png"  // replace with your actual logo file path
     alt="FutureTech"
-    style={{ height: 40, marginRight: 12 }}
+    style={{ height: 75, marginRight: 12 }}
     loading="lazy"
   /> 
 </Navbar.Brand>

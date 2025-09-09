@@ -35,24 +35,34 @@ const gainData = [
 ];
 
 const caseStudies = [
-  {
+    {
     id: 1,
-    title: "Shark Fin Antenna",
-    image: "/images/shark_fin_antenna.jpg",
-    summary:
-      "Innovative automotive antenna design with optimized VSWR and gain.",
-    details:
-      "Designed a shark fin antenna with exceptionally low VSWR for improved signal quality. Gain boosted substantially using advanced materials and geometry.",
-  },
-  {
-    id: 2,
     title: "Advanced ADAS System",
     image: "/images/adas_system.jpeg",
     summary:
       "Level 3 & 4 advanced driver assist system integrating radar and cameras.",
     details:
       "CAD and simulation optimizations allowed best-in-class automation capability for diverse driving scenarios.",
+  }, 
+  {
+    id: 2,
+    title: "Wireless Charging Solutions",
+    image: "/images/wireless_charging.jpeg",
+    summary:
+      "Next-gen wireless charging for automotive, heavy-duty vehicles, and drones.",
+    details:
+      "Qi-certified wireless charging up to 15W with BLE/Wi-Fi modems for CarPlay & Android Auto integration.",
   },
+  {
+    id: 3,
+    title: "Keyless Entry System",
+    image: "/images/keyless.png",
+    summary:
+      "Secure and convenient keyless entry with rolling code encryption.",
+    details:
+      "Passive entry & push-button start with encrypted RF transceivers and seamless ECU integration.",
+  },
+
 ];
 
 const ProjectsCaseStudiesPage = () => {

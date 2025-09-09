@@ -38,16 +38,7 @@ a, .nav-link {
   transition: color 0.3s ease;
 }
 
-a:hover,
-.nav-link:hover,
-.nav-link.active {
-  color: white;
-  text-decoration: none;
-  background-color: var(--hover-color);
-  border-radius: 6px;
-  padding: 6px 12px;
-  transition: background 0.3s ease;
-}
+
 
 /* ========= Buttons ========= */
 .btn-outline-primary {

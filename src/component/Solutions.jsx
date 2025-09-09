@@ -293,16 +293,6 @@ const Solutions = () => {
                       </li>
                     ))}
                   </ul>
-
-                  <Button
-                    href={sol.brochure}
-                    download
-                    variant="primary"
-                    className="mt-3"
-                    style={{ borderRadius: "6px" }}
-                  >
-                    Download Brochure
-                  </Button>
                 </Col>
               </Row>
 
@@ -448,6 +438,18 @@ const Solutions = () => {
                   </Col>
                 </Row>
               )}
+
+              {/* Moved Download Button here - after all content */}
+              <div className="text-center mt-5">
+                <Button
+                  href={sol.brochure}
+                  download
+                  variant="primary"
+                  style={{ borderRadius: "6px" }}
+                >
+                  Download Brochure
+                </Button>
+              </div>
             </Tab.Pane>
           ))}
         </Tab.Content>

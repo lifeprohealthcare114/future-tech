@@ -78,10 +78,10 @@ const Footer = () => {
             </h6>
             <ul style={{ listStyle: "none", paddingLeft: 0 }}>
               {[
-                { href: "/solutions/automotive", text: "Automotive Components" },
-                { href: "/solutions/rf", text: "RF & Wireless Systems" },
-                { href: "/solutions/adas", text: "ADAS & Smart Mobility" },
-                { href: "/solutions/emerging", text: "Emerging Technology" },
+                { href: "/solutions/1", text: "Shark Fin Antenna" },
+                { href: "/solutions/2", text: "ADAS & Smart Mobility" },
+                { href: "/solutions/3", text: "Wireless Charging Solutions" },
+                { href: "/solutions/4", text: "Keyless Entry System" },
               ].map(({ href, text }) => (
                 <li key={href} style={{ marginBottom: "8px" }}>
                   <a

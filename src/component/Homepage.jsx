@@ -3,7 +3,117 @@ import { Container, Button, Row, Col, Carousel } from "react-bootstrap";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
-// Dummy icons for highlights - replace with your SVG or icon components
+// TechnicalBackground component per previous implementation
+const techSymbols = [
+  { symbol: "📶", label: "Wi-Fi", color: "#4facfe" },
+  { symbol: "📡", label: "BLE Modem", color: "#667eea" },
+  { symbol: "📱", label: "Apple CarPlay", color: "#f093fb" },
+  { symbol: "🤖", label: "Android Auto", color: "#764ba2" },
+  { symbol: "🚗", label: "ADAS Vehicle", color: "#f5576c" },
+  { symbol: "🎯", label: "ADAS Sensors", color: "#4facfe" },
+];
+
+const pulseTransition = {
+  loop: Infinity,
+  ease: "easeInOut",
+  duration: 2,
+};
+
+const TechnicalBackground = () => {
+  const [dimensions, setDimensions] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  useEffect(() => {
+    const handleResize = () =>
+      setDimensions({ width: window.innerWidth, height: window.innerHeight });
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const positions = techSymbols.map(() => ({
+    x: Math.random() * dimensions.width * 0.8 + dimensions.width * 0.1,
+    y: Math.random() * dimensions.height * 0.6 + dimensions.height * 0.15,
+  }));
+
+  return (
+    <div
+      aria-hidden="true"
+      style={{
+        position: "absolute",
+        inset: 0,
+        background: "radial-gradient(circle at center, #0a1e4d, #04102a)",
+        overflow: "hidden",
+        zIndex: -1,
+      }}
+    >
+      <svg
+        width={dimensions.width}
+        height={dimensions.height}
+        style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}
+      >
+        {positions.map((pos, i) =>
+          positions.map((pos2, j) => {
+            if (i < j && Math.hypot(pos2.x - pos.x, pos2.y - pos.y) < 300) {
+              return (
+                <motion.line
+                  key={`${i}-${j}`}
+                  x1={pos.x}
+                  y1={pos.y}
+                  x2={pos2.x}
+                  y2={pos2.y}
+                  stroke="#4facfe88"
+                  strokeWidth={1}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: [0, 0.4, 0] }}
+                  transition={{
+                    delay: (i + j) * 0.3,
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
+              );
+            }
+            return null;
+          })
+        )}
+      </svg>
+
+      {techSymbols.map(({ symbol, label, color }, i) => (
+        <motion.div
+          key={i}
+          aria-label={label}
+          title={label}
+          initial={{ opacity: 0, scale: 0.7, x: positions[i].x, y: positions[i].y }}
+          animate={{
+            opacity: [0.8, 1, 0.8],
+            scale: [1, 1.2, 1],
+            y: [
+              positions[i].y,
+              positions[i].y + (i % 2 === 0 ? 20 : -20),
+              positions[i].y,
+            ],
+          }}
+          transition={pulseTransition}
+          style={{
+            position: "absolute",
+            fontSize: "2.8rem",
+            color: color,
+            textShadow: `0 0 8px ${color}`,
+            userSelect: "none",
+            pointerEvents: "none",
+          }}
+        >
+          {symbol}
+        </motion.div>
+      ))}
+    </div>
+  );
+};
+
+// Dummy icons for highlights
 const IconPlaceholder = ({ label }) => (
   <div
     style={{
@@ -17,7 +127,7 @@ const IconPlaceholder = ({ label }) => (
   </div>
 );
 
-// Counter component animates from 0 to target number on scroll into viewport
+// Counter component
 const Counter = ({ end, duration = 2, suffix = "" }) => {
   const [count, setCount] = useState(0);
   const ref = useRef();
@@ -54,294 +164,6 @@ const Counter = ({ end, duration = 2, suffix = "" }) => {
     >
       {count}
       {suffix}
-    </div>
-  );
-};
-
-// 🔥 Full Enhanced Animated Tech Background
-const AnimatedBackground = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
-  const techElements = [
-    { symbol: "📡", label: "RF Signals" },
-    { symbol: "🛰️", label: "Satellite" },
-    { symbol: "⚡", label: "Power" },
-    { symbol: "🔧", label: "Engineering" },
-    { symbol: "🚗", label: "Automotive" },
-    { symbol: "📊", label: "Analytics" },
-    { symbol: "🎯", label: "ADAS" },
-    { symbol: "📶", label: "Wireless" },
-  ];
-
-  return (
-    <div
-      style={{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100vh",
-        zIndex: -1,
-        overflow: "hidden",
-        background:
-          "linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%)",
-        backgroundSize: "400% 400%",
-      }}
-    >
-      {/* Animated Gradient Background */}
-      <motion.div
-        animate={{
-          backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        style={{
-          position: "absolute",
-          width: "100%",
-          height: "100%",
-          background:
-            "linear-gradient(135deg, rgba(102,126,234,0.8) 0%, rgba(118,75,162,0.6) 25%, rgba(240,147,251,0.4) 50%, rgba(245,87,108,0.6) 75%, rgba(79,172,254,0.8) 100%)",
-          backgroundSize: "400% 400%",
-        }}
-      />
-
-      {/* Pulsing Grid Effect */}
-      <motion.div
-        animate={{
-          opacity: [0.1, 0.3, 0.1],
-          scale: [1, 1.02, 1],
-        }}
-        transition={{ duration: 4, repeat: Infinity }}
-        style={{
-          position: "absolute",
-          width: "100%",
-          height: "100%",
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.15) 2px, transparent 2px), linear-gradient(90deg, rgba(255,255,255,0.15) 2px, transparent 2px)",
-          backgroundSize: "60px 60px",
-        }}
-      />
-
-      {/* Circuit Board Pattern */}
-      <motion.div
-        animate={{
-          opacity: [0.2, 0.4, 0.2],
-          x: [0, 20, 0],
-        }}
-        transition={{ duration: 6, repeat: Infinity }}
-        style={{
-          position: "absolute",
-          width: "100%",
-          height: "100%",
-          backgroundImage: `
-            linear-gradient(90deg, rgba(0,255,255,0.3) 1px, transparent 1px),
-            linear-gradient(rgba(0,255,255,0.3) 1px, transparent 1px),
-            linear-gradient(45deg, rgba(255,0,255,0.2) 1px, transparent 1px),
-            linear-gradient(-45deg, rgba(255,255,0,0.2) 1px, transparent 1px)
-          `,
-          backgroundSize: "30px 30px, 30px 30px, 60px 60px, 60px 60px",
-        }}
-      />
-
-      {/* Floating Tech Elements */}
-      {techElements.map((element, i) => (
-        <motion.div
-          key={i}
-          initial={{
-            x:
-              Math.random() *
-              (typeof window !== "undefined" ? window.innerWidth : 1200),
-            y:
-              Math.random() *
-              (typeof window !== "undefined" ? window.innerHeight : 800),
-            rotate: 0,
-          }}
-          animate={{
-            x: [
-              Math.random() *
-                (typeof window !== "undefined" ? window.innerWidth : 1200),
-              Math.random() *
-                (typeof window !== "undefined" ? window.innerWidth : 1200),
-              Math.random() *
-                (typeof window !== "undefined" ? window.innerWidth : 1200),
-            ],
-            y: [
-              Math.random() *
-                (typeof window !== "undefined" ? window.innerHeight : 800),
-              Math.random() *
-                (typeof window !== "undefined" ? window.innerHeight : 800),
-              Math.random() *
-                (typeof window !== "undefined" ? window.innerHeight : 800),
-            ],
-            rotate: [0, 360],
-          }}
-          transition={{
-            duration: 15 + i * 3,
-            repeat: Infinity,
-            repeatType: "loop",
-            ease: "easeInOut",
-          }}
-          whileHover={{ scale: 1.5 }}
-          style={{
-            position: "absolute",
-            fontSize: "2rem",
-            zIndex: 1,
-            cursor: "pointer",
-            filter: "drop-shadow(0 0 10px rgba(255,255,255,0.8))",
-          }}
-          aria-label={element.label}
-        >
-          <motion.div
-            animate={{ scale: [1, 1.2, 1] }}
-            transition={{ duration: 2, repeat: Infinity, delay: i * 0.5 }}
-          >
-            {element.symbol}
-          </motion.div>
-        </motion.div>
-      ))}
-
-      {/* Orbiting Particles */}
-      {[...Array(15)].map((_, i) => (
-        <motion.div
-          key={`orb-${i}`}
-          initial={{
-            x:
-              (typeof window !== "undefined" ? window.innerWidth : 1200) / 2,
-            y:
-              (typeof window !== "undefined" ? window.innerHeight : 800) / 2,
-          }}
-          animate={{
-            x: [
-              (typeof window !== "undefined" ? window.innerWidth : 1200) / 2 +
-                Math.cos(i * 0.4) * (200 + i * 20),
-              (typeof window !== "undefined" ? window.innerWidth : 1200) / 2 +
-                Math.cos(i * 0.4 + Math.PI) * (200 + i * 20),
-              (typeof window !== "undefined" ? window.innerWidth : 1200) / 2 +
-                Math.cos(i * 0.4) * (200 + i * 20),
-            ],
-            y: [
-              (typeof window !== "undefined" ? window.innerHeight : 800) / 2 +
-                Math.sin(i * 0.4) * (200 + i * 20),
-              (typeof window !== "undefined" ? window.innerHeight : 800) / 2 +
-                Math.sin(i * 0.4 + Math.PI) * (200 + i * 20),
-              (typeof window !== "undefined" ? window.innerHeight : 800) / 2 +
-                Math.sin(i * 0.4) * (200 + i * 20),
-            ],
-          }}
-          transition={{
-            duration: 8 + i * 2,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          style={{
-            position: "absolute",
-            width: 8 + Math.random() * 12,
-            height: 8 + Math.random() * 12,
-            borderRadius: "50%",
-            background: `radial-gradient(circle, 
-              rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(
-            Math.random() * 255
-          )}, 255, 0.9) 0%, 
-              rgba(255, ${Math.floor(Math.random() * 255)}, ${Math.floor(
-            Math.random() * 255
-          )}, 0.6) 100%)`,
-            boxShadow: `0 0 20px rgba(${Math.floor(Math.random() * 255)}, ${
-              Math.floor(Math.random() * 255)
-            }, 255, 0.8)`,
-          }}
-          aria-hidden="true"
-        />
-      ))}
-
-      {/* Mouse Follow Effect */}
-      <motion.div
-        animate={{
-          x: mousePosition.x - 50,
-          y: mousePosition.y - 50,
-        }}
-        transition={{ type: "spring", stiffness: 50, damping: 15 }}
-        style={{
-          position: "fixed",
-          width: "100px",
-          height: "100px",
-          borderRadius: "50%",
-          background:
-            "radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%)",
-          pointerEvents: "none",
-          zIndex: 2,
-          border: "2px solid rgba(255,255,255,0.2)",
-        }}
-        aria-hidden="true"
-      />
-
-      {/* Scanning Line Effect */}
-      <motion.div
-        animate={{
-          y: ["-100vh", "100vh"],
-          opacity: [0, 0.8, 0.8, 0],
-        }}
-        transition={{
-          duration: 6,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        style={{
-          position: "absolute",
-          left: 0,
-          width: "100%",
-          height: "4px",
-          background:
-            "linear-gradient(90deg, transparent 0%, rgba(0,255,255,0.8) 50%, transparent 100%)",
-          boxShadow: "0 0 20px rgba(0,255,255,0.6)",
-        }}
-        aria-hidden="true"
-      />
-
-      {/* Binary Rain Effect */}
-      {[...Array(20)].map((_, i) => (
-        <motion.div
-          key={`binary-${i}`}
-          initial={{ y: -100, opacity: 0 }}
-          animate={{
-            y:
-              (typeof window !== "undefined" ? window.innerHeight : 800) + 100,
-            opacity: [0, 1, 1, 0],
-          }}
-          transition={{
-            duration: 8 + Math.random() * 4,
-            repeat: Infinity,
-            delay: Math.random() * 5,
-            ease: "linear",
-          }}
-          style={{
-            position: "absolute",
-            left: `${Math.random() * 100}%`,
-            color: "rgba(0,255,0,0.7)",
-            fontSize: "12px",
-            fontFamily: "monospace",
-            textShadow: "0 0 5px rgba(0,255,0,0.8)",
-            userSelect: "none",
-          }}
-          aria-hidden="true"
-        >
-          {Math.random() > 0.5 ? "1" : "0"}
-          <br />
-          {Math.random() > 0.5 ? "0" : "1"}
-          <br />
-          {Math.random() > 0.5 ? "1" : "0"}
-        </motion.div>
-      ))}
     </div>
   );
 };
@@ -419,7 +241,7 @@ const HomePage = () => {
           overflow: "hidden",
         }}
       >
-        <AnimatedBackground />
+        <TechnicalBackground />
         <motion.h1
           initial="hidden"
           animate="visible"
@@ -615,6 +437,42 @@ const HomePage = () => {
               </Carousel.Item>
             ))}
           </Carousel>
+        </Container>
+      </section>
+
+      {/* Overview Section: About Us preview */}
+      <section
+        style={{
+          backgroundColor: "#f8f9fa",
+          paddingTop: 60,
+          paddingBottom: 60,
+        }}
+      >
+        <Container>
+          <Row className="align-items-center">
+            <Col md={6} className="mb-4 mb-md-0">
+              <img
+                src="/images/futuretech.png"
+                alt="FutureTech Dynamics Facility Overview"
+                style={{
+                  width: "100%",
+                  borderRadius: 16,
+                  boxShadow: "0 8px 24px rgba(0, 123, 255, 0.3)",
+                  objectFit: "cover",
+                  maxHeight: 350,
+                }}
+              />
+            </Col>
+            <Col md={6}>
+              <h2 className="text-primary fw-bold mb-4">About FutureTech Dynamics</h2>
+              <p style={{ fontSize: 18, color: "#212529", maxWidth: 600 }}>
+                Leveraging decades of experience and cutting-edge technology, FutureTech Dynamics is pioneering the future of connected mobility with innovative solutions in smart electronics, connectivity, and advanced driver assistance.
+              </p>
+              <Button as={Link} to="/about" variant="primary" size="lg">
+                Learn More About Us
+              </Button>
+            </Col>
+          </Row>
         </Container>
       </section>
     </>
