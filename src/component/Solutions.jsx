@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { Container, Tab, Nav, Button, Row, Col, Card } from "react-bootstrap";
+import { Container, Tab, Nav, Row, Col, Card } from "react-bootstrap";
+import Button from "react-bootstrap/Button"; // <-- import Button separately
 import { motion } from "framer-motion";
 import {
   Cpu,
@@ -20,6 +21,7 @@ import {
   Activity,
   MessageSquare,
 } from "lucide-react";
+
 
 const solutionData = {
   1: {
@@ -304,7 +306,7 @@ const Solutions = () => {
                 </Col>
               </Row>
 
-              {/* Shark Fin Antenna extra */}
+              {/* Additional sections for solutions */}
               {key === "1" && (
                 <>
                   <h4 className="fw-bold mt-5 mb-3" style={{ color: "#007BFF" }}>
@@ -352,7 +354,6 @@ const Solutions = () => {
                 </>
               )}
 
-              {/* ADAS extra */}
               {key === "2" && sol.extra && (
                 <Row className="mt-5">
                   <Col>
@@ -378,7 +379,6 @@ const Solutions = () => {
                 </Row>
               )}
 
-              {/* Wireless Charging extra */}
               {key === "3" && sol.extra && (
                 <Row className="mt-5 align-items-center">
                   <Col md={6}>
@@ -414,7 +414,6 @@ const Solutions = () => {
                 </Row>
               )}
 
-              {/* Keyless Entry extra */}
               {key === "4" && sol.extra && (
                 <Row className="mt-5 align-items-center">
                   <Col md={6}>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button, Tooltip, OverlayTrigger } from "react-bootstrap";
 import { PhoneFill, EnvelopeFill, GeoAltFill, ChatDots, X } from "react-bootstrap-icons";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 const maps = {
   yamunaNagar: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3443.226876621854!2d77.30023301506106!3d30.127673881838736!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cdd0cdb3580e3%3A0xc9cb78767b4f41e7!2sYamuna%20Nagar!5e0!3m2!1sen!2sin!4v1678546880200!5m2!1sen!2sin",
@@ -175,54 +175,52 @@ const ContactUsPage = () => {
       </Row>
 
       {/* Draggable & Dismissible Chatbot */}
-      <AnimatePresence>
-        {showChatbot && (
-          <motion.div
-            drag
-            dragConstraints={{ top: 0, bottom: window.innerHeight - 60, left: 0, right: window.innerWidth - 60 }}
-            initial={{ opacity: 0, bottom: -80 }}
-            animate={{ opacity: 1, bottom: 30 }}
-            exit={{ opacity: 0, bottom: -80 }}
-            transition={{ type: "spring", stiffness: 120 }}
+      {showChatbot && (
+        <motion.div
+          drag
+          dragConstraints={{ top: 0, bottom: window.innerHeight - 60, left: 0, right: window.innerWidth - 60 }}
+          initial={{ opacity: 0, bottom: -80 }}
+          animate={{ opacity: 1, bottom: 30 }}
+          exit={{ opacity: 0, bottom: -80 }}
+          transition={{ type: "spring", stiffness: 120 }}
+          style={{
+            position: "fixed",
+            right: 30,
+            bottom: 30,
+            background: "linear-gradient(135deg, #007BFF, #00BFFF)",
+            borderRadius: "50%",
+            boxShadow: "0 0 20px #00BFFF",
+            width: 60,
+            height: 60,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            cursor: "grab",
+            zIndex: 1000,
+          }}
+        >
+          <div
+            onClick={() => setShowChatbot(false)}
             style={{
-              position: "fixed",
-              right: 30,
-              bottom: 30,
-              background: "linear-gradient(135deg, #007BFF, #00BFFF)",
+              position: "absolute",
+              top: -5,
+              right: -5,
+              background: "#fff",
               borderRadius: "50%",
-              boxShadow: "0 0 20px #00BFFF",
-              width: 60,
-              height: 60,
+              width: 20,
+              height: 20,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              cursor: "grab",
-              zIndex: 1000,
+              cursor: "pointer",
+              boxShadow: "0 0 5px #0003",
             }}
           >
-            <div
-              onClick={() => setShowChatbot(false)}
-              style={{
-                position: "absolute",
-                top: -5,
-                right: -5,
-                background: "#fff",
-                borderRadius: "50%",
-                width: 20,
-                height: 20,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                cursor: "pointer",
-                boxShadow: "0 0 5px #0003",
-              }}
-            >
-              <X size={12} color="#007BFF" />
-            </div>
-            <ChatDots size={32} color="white" />
-          </motion.div>
-        )}
-      </AnimatePresence>
+            <X size={12} color="#007BFF" />
+          </div>
+          <ChatDots size={32} color="white" />
+        </motion.div>
+      )}
     </Container>
   );
 };

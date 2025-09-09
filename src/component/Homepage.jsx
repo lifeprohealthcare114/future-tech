@@ -47,7 +47,11 @@ const Counter = ({ end, duration = 2, suffix = "" }) => {
   }, [end, duration]);
 
   return (
-    <div ref={ref} style={{ fontSize: 36, fontWeight: "700", color: "#007BFF" }}>
+    <div
+      ref={ref}
+      style={{ fontSize: 36, fontWeight: "700", color: "#007BFF" }}
+      aria-label={`Counter to ${end}${suffix}`}
+    >
       {count}
       {suffix}
     </div>
@@ -196,6 +200,7 @@ const AnimatedBackground = () => {
             cursor: "pointer",
             filter: "drop-shadow(0 0 10px rgba(255,255,255,0.8))",
           }}
+          aria-label={element.label}
         >
           <motion.div
             animate={{ scale: [1, 1.2, 1] }}
@@ -245,12 +250,17 @@ const AnimatedBackground = () => {
             height: 8 + Math.random() * 12,
             borderRadius: "50%",
             background: `radial-gradient(circle, 
-              rgba(${Math.random() * 255}, ${Math.random() * 255}, 255, 0.9) 0%, 
-              rgba(255, ${Math.random() * 255}, ${Math.random() * 255}, 0.6) 100%)`,
-            boxShadow: `0 0 20px rgba(${Math.random() * 255}, ${
-              Math.random() * 255
+              rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(
+            Math.random() * 255
+          )}, 255, 0.9) 0%, 
+              rgba(255, ${Math.floor(Math.random() * 255)}, ${Math.floor(
+            Math.random() * 255
+          )}, 0.6) 100%)`,
+            boxShadow: `0 0 20px rgba(${Math.floor(Math.random() * 255)}, ${
+              Math.floor(Math.random() * 255)
             }, 255, 0.8)`,
           }}
+          aria-hidden="true"
         />
       ))}
 
@@ -272,6 +282,7 @@ const AnimatedBackground = () => {
           zIndex: 2,
           border: "2px solid rgba(255,255,255,0.2)",
         }}
+        aria-hidden="true"
       />
 
       {/* Scanning Line Effect */}
@@ -294,6 +305,7 @@ const AnimatedBackground = () => {
             "linear-gradient(90deg, transparent 0%, rgba(0,255,255,0.8) 50%, transparent 100%)",
           boxShadow: "0 0 20px rgba(0,255,255,0.6)",
         }}
+        aria-hidden="true"
       />
 
       {/* Binary Rain Effect */}
@@ -321,6 +333,7 @@ const AnimatedBackground = () => {
             textShadow: "0 0 5px rgba(0,255,0,0.8)",
             userSelect: "none",
           }}
+          aria-hidden="true"
         >
           {Math.random() > 0.5 ? "1" : "0"}
           <br />
@@ -492,77 +505,74 @@ const HomePage = () => {
         </Container>
       </section>
 
-{/* Featured Solutions Section */}
+      {/* Featured Solutions Section */}
+      <section
+        id="solutions"
+        style={{ paddingTop: 60, paddingBottom: 60, backgroundColor: "#F9FAFB" }}
+      >
+        <Container>
+          <motion.h2
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            style={{ textAlign: "center", marginBottom: 50 }}
+          >
+            Featured Solutions
+          </motion.h2>
 
-<section
-  id="solutions"
-  style={{ paddingTop: 60, paddingBottom: 60, backgroundColor: "#F9FAFB" }}
->
-  <Container>
-    <motion.h2
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true }}
-      variants={fadeInUp}
-      style={{ textAlign: "center", marginBottom: 50 }}
-    >
-      Featured Solutions
-    </motion.h2>
+          <Carousel indicators={true} interval={5000} pause="hover">
+            {featuredSolutions.map((solution, idx) => (
+              <Carousel.Item key={solution.id}>
+                <Row className="align-items-center justify-content-center">
+                  {/* Image on left */}
+                  <Col md={6}>
+                    <motion.img
+                      src={solution.imgSrc}
+                      alt={solution.title}
+                      whileHover={{ scale: 1.05 }}
+                      initial={{ opacity: 0, x: -50 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.6, delay: 0.2 }}
+                      style={{
+                        width: "100%",
+                        height: "400px",
+                        objectFit: "cover",
+                        borderRadius: "12px",
+                        boxShadow: "0 6px 18px rgba(0,0,0,0.2)",
+                      }}
+                    />
+                  </Col>
 
-    <Carousel indicators={true} interval={5000} pause="hover">
-      {featuredSolutions.map((solution, idx) => (
-        <Carousel.Item key={solution.id}>
-          <Row className="align-items-center justify-content-center">
-            {/* Image on left */}
-            <Col md={6}>
-              <motion.img
-                src={solution.imgSrc}
-                alt={solution.title}
-                whileHover={{ scale: 1.05 }}
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                style={{
-                  width: "100%",
-                  height: "400px",
-                  objectFit: "cover",
-                  borderRadius: "12px",
-                  boxShadow: "0 6px 18px rgba(0,0,0,0.2)",
-                }}
-              />
-            </Col>
-
-            {/* Content on right */}
-            <Col md={6}>
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                custom={idx}
-                variants={fadeInUp}
-              >
-                <h3 style={{ fontWeight: "700", marginBottom: 16 }}>
-                  {solution.title}
-                </h3>
-                <p style={{ fontSize: 16, color: "#555", marginBottom: 24 }}>
-                  {solution.description}
-                </p>
-                <Link to={`/solutions/${solution.id}`}>
-                  <Button variant="primary" size="lg">
-                    Learn More →
-                  </Button>
-                </Link>
-              </motion.div>
-            </Col>
-          </Row>
-        </Carousel.Item>
-      ))}
-    </Carousel>
-  </Container>
-</section>
-
-
+                  {/* Content on right */}
+                  <Col md={6}>
+                    <motion.div
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true }}
+                      custom={idx}
+                      variants={fadeInUp}
+                    >
+                      <h3 style={{ fontWeight: "700", marginBottom: 16 }}>
+                        {solution.title}
+                      </h3>
+                      <p style={{ fontSize: 16, color: "#555", marginBottom: 24 }}>
+                        {solution.description}
+                      </p>
+                      <Link to={`/solutions/${solution.id}`}>
+                        <Button variant="primary" size="lg">
+                          Learn More →
+                        </Button>
+                      </Link>
+                    </motion.div>
+                  </Col>
+                </Row>
+              </Carousel.Item>
+            ))}
+          </Carousel>
+        </Container>
+      </section>
 
       {/* Clients Carousel Section */}
       <section
