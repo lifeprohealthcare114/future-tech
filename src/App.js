@@ -7,7 +7,9 @@ import Solutions from "./component/Solutions";
 import SharkFinAntenna from "./component/SharkFinAntenna"; 
 import IndustriesServed from "./component/IndustriesServed"; 
 import MediaDownloadsPage from "./component/MediaDownloadsPage"; 
+import ProjectsCaseStudiesPage from "./component/ProjectsCaseStudiesPage"; 
 import AboutUsPage from "./component/AboutUsPage"; 
+import ContactUsPage from "./component/ContactUsPage"; 
 import Footer from "./Footer"; 
 import ScrollToTop from './ScrollToTop';
 import './styles/theme.css';
@@ -33,6 +35,9 @@ function App() {
         <Route path="/industriesserved" element={<IndustriesServed />} />
         <Route path="/media" element={<MediaDownloadsPage />} />
         <Route path="/aboutus" element={<AboutUsPage />} />
+        <Route path="/contactus" element={<ContactUsPage />} />
+        <Route path="/projects" element={<ProjectsCaseStudiesPage />} />
+
 
       </Routes>
 

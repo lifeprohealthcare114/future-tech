@@ -30,7 +30,7 @@ const industryData = [
     color: "green",
     description:
       "Mission-critical RF and communication systems for defense applications.",
-    image: "/images/industries/defense.jpg", 
+    image: "/images/industries/defense.png", 
     highlights: [
       "High-frequency RADAR systems, telemetry communication, RF modules.",
       "Navy ships with RF overlays, ISRO-style spacecraft with signal beams, animated defense badges.",
@@ -44,7 +44,7 @@ const industryData = [
     color: "purple",
     description:
       "Smart farming solutions with drone technology and IoT integration.",
-    image: "/images/industries/agriculture.jpg", 
+    image: "/images/industries/agriculture.png", 
     highlights: [
       "Wireless charging systems for drones, RF modules for remote monitoring, telemetry.",
       "Drone flight paths over farmland, wireless charging pads powering UAVs.",

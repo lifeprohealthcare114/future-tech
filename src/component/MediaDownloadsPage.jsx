@@ -64,8 +64,8 @@ const mediaGallery = {
   ],
   productImages: [
     { alt: "Shark Fin Antenna", src: "/images/shark_fin_antenna.jpg" },
-    { alt: "ADAS Module", src: "/images/adas_module.jpg" },
-    { alt: "Wireless Charger", src: "/images/wireless_charger.jpg" },
+    { alt: "ADAS Module", src: "/images/adas_system.jpeg" },
+    { alt: "Wireless Charger", src: "/images/wireless_charging.jpeg" },
   ],
   videos: [
     {
