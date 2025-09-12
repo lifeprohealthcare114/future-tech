@@ -1,41 +1,33 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Button, Row, Col, Carousel } from "react-bootstrap";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 
-// TechnicalBackground component per previous implementation
-const techSymbols = [
-  { symbol: "📶", label: "Wi-Fi", color: "#4facfe" },
-  { symbol: "📡", label: "BLE Modem", color: "#667eea" },
-  { symbol: "📱", label: "Apple CarPlay", color: "#f093fb" },
-  { symbol: "🤖", label: "Android Auto", color: "#764ba2" },
-  { symbol: "🚗", label: "ADAS Vehicle", color: "#f5576c" },
-  { symbol: "🎯", label: "ADAS Sensors", color: "#4facfe" },
+// Slider images for hero background
+const sliderImages = [
+  "/images/slider1.png",
+  "/images/slider2.png",
+  "/images/slider3.png",
+  "/images/slider4.png",
 ];
 
-const pulseTransition = {
-  loop: Infinity,
-  ease: "easeInOut",
-  duration: 2,
+// Background slider component with smooth fade transitions
+const backgroundVariants = {
+  enter: { opacity: 0 },
+  center: { opacity: 1 },
+  exit: { opacity: 0 },
 };
 
-const TechnicalBackground = () => {
-  const [dimensions, setDimensions] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
+const HeroBackgroundSlider = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    const handleResize = () =>
-      setDimensions({ width: window.innerWidth, height: window.innerHeight });
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % sliderImages.length);
+    }, 3000); // Change every 3 seconds
 
-  const positions = techSymbols.map(() => ({
-    x: Math.random() * dimensions.width * 0.8 + dimensions.width * 0.1,
-    y: Math.random() * dimensions.height * 0.6 + dimensions.height * 0.15,
-  }));
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div
@@ -43,72 +35,41 @@ const TechnicalBackground = () => {
       style={{
         position: "absolute",
         inset: 0,
-        background: "radial-gradient(circle at center, #0a1e4d, #04102a)",
         overflow: "hidden",
         zIndex: -1,
       }}
     >
-      <svg
-        width={dimensions.width}
-        height={dimensions.height}
-        style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}
-      >
-        {positions.map((pos, i) =>
-          positions.map((pos2, j) => {
-            if (i < j && Math.hypot(pos2.x - pos.x, pos2.y - pos.y) < 300) {
-              return (
-                <motion.line
-                  key={`${i}-${j}`}
-                  x1={pos.x}
-                  y1={pos.y}
-                  x2={pos2.x}
-                  y2={pos2.y}
-                  stroke="#4facfe88"
-                  strokeWidth={1}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: [0, 0.4, 0] }}
-                  transition={{
-                    delay: (i + j) * 0.3,
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
-              );
-            }
-            return null;
-          })
-        )}
-      </svg>
-
-      {techSymbols.map(({ symbol, label, color }, i) => (
-        <motion.div
-          key={i}
-          aria-label={label}
-          title={label}
-          initial={{ opacity: 0, scale: 0.7, x: positions[i].x, y: positions[i].y }}
-          animate={{
-            opacity: [0.8, 1, 0.8],
-            scale: [1, 1.2, 1],
-            y: [
-              positions[i].y,
-              positions[i].y + (i % 2 === 0 ? 20 : -20),
-              positions[i].y,
-            ],
-          }}
-          transition={pulseTransition}
+      <AnimatePresence>
+        <motion.img
+          key={sliderImages[currentIndex]}
+          src={sliderImages[currentIndex]}
+          alt=""
+          initial="enter"
+          animate="center"
+          exit="exit"
+          variants={backgroundVariants}
+          transition={{ duration: 1 }}
           style={{
             position: "absolute",
-            fontSize: "2.8rem",
-            color: color,
-            textShadow: `0 0 8px ${color}`,
-            userSelect: "none",
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            top: 0,
+            left: 0,
             pointerEvents: "none",
           }}
-        >
-          {symbol}
-        </motion.div>
-      ))}
+        />
+      </AnimatePresence>
+      {/* Optional dark overlay for better text contrast */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "rgba(10, 30, 77, 0.6)",
+          pointerEvents: "none",
+          zIndex: 1,
+        }}
+      />
     </div>
   );
 };
@@ -129,11 +90,11 @@ const IconPlaceholder = ({ label }) => (
 
 // Counter component
 const Counter = ({ end, duration = 2, suffix = "" }) => {
-  const [count, setCount] = useState(0);
-  const ref = useRef();
-  const started = useRef(false);
+  const [count, setCount] = React.useState(0);
+  const ref = React.useRef();
+  const started = React.useRef(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const onScroll = () => {
       if (!ref.current) return;
       const top = ref.current.getBoundingClientRect().top;
@@ -172,10 +133,7 @@ const quickHighlights = [
   { iconLabel: "50+", text: "Years Automotive Expertise" },
   { iconLabel: "50 GHz", text: "RF & Microwave Innovation" },
   { iconLabel: "ADAS", text: "Advanced ADAS & Wireless Components" },
-  {
-    iconLabel: "Global",
-    text: "Global Presence (India, USA, Germany, Brazil)",
-  },
+  { iconLabel: "Global", text: "Global Presence (India, USA, Germany, Brazil)" },
 ];
 
 const featuredSolutions = [
@@ -226,7 +184,7 @@ const fadeInUp = {
 const HomePage = () => {
   return (
     <>
-      {/* Hero Section */}
+      {/* Hero Section with background image slider */}
       <section
         style={{
           position: "relative",
@@ -241,7 +199,7 @@ const HomePage = () => {
           overflow: "hidden",
         }}
       >
-        <TechnicalBackground />
+        <HeroBackgroundSlider />
         <motion.h1
           initial="hidden"
           animate="visible"
@@ -253,6 +211,8 @@ const HomePage = () => {
             marginBottom: 24,
             color: "#FFFFFF",
             textShadow: "0 0 15px rgba(0,0,0,0.7)",
+            zIndex: 2,
+            position: "relative",
           }}
         >
           Enabling the Future of Mobility & Smart Electronics
@@ -262,6 +222,7 @@ const HomePage = () => {
           animate="visible"
           variants={fadeInUp}
           transition={{ delay: 0.3 }}
+          style={{ zIndex: 2, position: "relative" }}
         >
           <Button
             variant="outline-light"
@@ -271,14 +232,14 @@ const HomePage = () => {
           >
             Explore Solutions
           </Button>
-          <Button variant="light" size="lg" href="#contact">
+          <Button variant="light" size="lg" href="contactus">
             Contact Us
           </Button>
         </motion.div>
         <motion.div
           animate={{ y: [0, 15, 0] }}
           transition={{ repeat: Infinity, duration: 2 }}
-          style={{ marginTop: 48, fontSize: 32, color: "#FFF" }}
+          style={{ marginTop: 48, fontSize: 32, color: "#FFF", zIndex: 2, position: "relative" }}
           aria-label="Scroll down indicator"
         >
           ↓
@@ -464,9 +425,14 @@ const HomePage = () => {
               />
             </Col>
             <Col md={6}>
-              <h2 className="text-primary fw-bold mb-4">About FutureTech Dynamics</h2>
+              <h2 className="text-primary fw-bold mb-4">
+                About FutureTech Dynamics
+              </h2>
               <p style={{ fontSize: 18, color: "#212529", maxWidth: 600 }}>
-                Leveraging decades of experience and cutting-edge technology, FutureTech Dynamics is pioneering the future of connected mobility with innovative solutions in smart electronics, connectivity, and advanced driver assistance.
+                Leveraging decades of experience and cutting-edge technology,
+                FutureTech Dynamics is pioneering the future of connected
+                mobility with innovative solutions in smart electronics,
+                connectivity, and advanced driver assistance.
               </p>
               <Button as={Link} to="/about" variant="primary" size="lg">
                 Learn More About Us

@@ -44,7 +44,7 @@ const featuredDownloads = [
     title: "Wireless & ADAS Solutions",
     description:
       "Details on Shark Fin Antennas, Wireless Charging, Keyless Entry, TPMS, ADAS modules.",
-    pdf: "/downloads/wireless_adas_solutions.pdf",
+    pdf: "/brochures/Futuretech Dynamics Brochure.pdf",
     glowColor: "rgba(0,123,255,0.75)",
   },
 ];
@@ -81,6 +81,7 @@ const mediaGallery = {
     { alt: "OEM Logo 1", src: "/logos/mg.png" },
     { alt: "OEM Logo 2", src: "/logos/toyota.jpg" },
     { alt: "OEM Badge 1", src: "/logos/honda.jpg" },
+     { alt: "OEM Badge 1", src: "/logos/kia.webp" },
   ],
   productImages: [
     { alt: "Shark Fin Antenna", src: "/images/shark_fin_antenna.jpg" },
